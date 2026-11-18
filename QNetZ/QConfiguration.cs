@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace QNetZ
@@ -35,6 +36,28 @@ namespace QNetZ
 		public string BaseUrl { get; set; }
 		public string Secret { get; set; }
 	}
+
+	public class RelayNodeConfig
+	{
+		public ushort RelayId { get; set; }
+		public string Name { get; set; } = string.Empty;
+		public string Region { get; set; } = "default";
+		public string Host { get; set; } = "127.0.0.1";
+		public ushort UdpPort { get; set; } = 19100;
+		public string HttpBaseUrl { get; set; } = string.Empty;
+		public string S2sAddr { get; set; } = string.Empty;
+		public uint Capacity { get; set; } = 2000;
+	}
+
+	public class RelayConfig
+	{
+		public bool Enabled { get; set; } = false;
+		public string SigningKeyPath { get; set; } = "relay_signing_key.pem";
+		public int TicketTtlSeconds { get; set; } = 3600;
+		public int HealthPollIntervalSeconds { get; set; } = 15;
+		public string UpstreamDirectoryUrl { get; set; } = string.Empty;
+		public List<RelayNodeConfig> Nodes { get; set; } = new List<RelayNodeConfig>();
+	}
 	
 	public class QConfiguration
 	{
@@ -55,6 +78,17 @@ namespace QNetZ
 		public string ServerBaseUrl { get; set; }
 		public string RdvConnectionUrl { get; set; }
 		public bool AllowRegistrations { get; set; }
+		private RelayConfig? _relayConfig;
+		public RelayConfig RelayConfig
+		{
+			get
+			{
+				_relayConfig ??= new RelayConfig();
+				return _relayConfig;
+			}
+			set => _relayConfig = value;
+		}
+
 		private MarketplaceConfig? _marketplaceConfig;
 		public MarketplaceConfig MarketplaceConfig
 		{

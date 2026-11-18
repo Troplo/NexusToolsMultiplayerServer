@@ -80,6 +80,10 @@ namespace Alcatraz.GameServices
 			// add servers
 			services.AddSingleton<IHostedService, BackendServicesServer>();
 			services.AddSingleton<IHostedService, RendezVousServer>();
+			services.AddHttpClient();
+			services.AddSingleton<RelayService>();
+			services.AddSingleton<IRelayService>(sp => sp.GetRequiredService<RelayService>());
+			services.AddSingleton<IHostedService>(sp => sp.GetRequiredService<RelayService>());
 
             services.AddDbContext<MainDbContext>(opt =>
 			{

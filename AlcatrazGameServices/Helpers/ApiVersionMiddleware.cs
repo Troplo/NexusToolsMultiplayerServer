@@ -14,7 +14,7 @@ namespace Alcatraz.GameServices.Helpers
             // ubiservices
             1, 2, 3, 4, 5,
             // tntmp
-            20260526, 20260614, 20260701
+            20260526, 20260614, 20260701, 20261117
         };
 
         public ApiVersionMiddleware(RequestDelegate next)
